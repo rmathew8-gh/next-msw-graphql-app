@@ -1,5 +1,5 @@
 import { graphql, HttpResponse } from "msw";
-import Hello3 from "./Hello3";
+import Hello3, { Hello3Provider } from "./Hello3";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 const client = new ApolloClient({
@@ -13,16 +13,21 @@ export default {
   decorators: [
     (Story: React.ComponentType) => (
       <ApolloProvider client={client}>
-        <Story />
+        <Hello3Provider>
+          <Story />
+        </Hello3Provider>
       </ApolloProvider>
     ),
   ],
 };
 
-const Template = (args: { id: number; name: string }) => <Hello3 {...args} />;
+const Template = (args: Hello3Props) => <Hello3 {...args} />;
 
 export const SuccessState = {
   render: Template,
+  args: {
+    name: "Default Name"
+  },
   parameters: {
     msw: {
       handlers: [
