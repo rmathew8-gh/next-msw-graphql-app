@@ -12,3 +12,19 @@ pnpm i graphql @apollo/client
 npx storybook@latest init
 npx msw init ./public
 #+end_src
+
+** Usage Patterns
+*** Pattern 1: Component-level Query
+- The data is only needed by this component
+- The query is simple
+- You don't need to share the data with other components
+
+*** Pattern 2: Custom Hook
+- Reuse the query logic across multiple components
+- Separate data fetching concerns
+- Add additional data transformation logic
+
+*** Pattern 2: Context Provider
+- The data needs to be shared across many components
+- You want to avoid prop drilling
+- You need to manage global state
