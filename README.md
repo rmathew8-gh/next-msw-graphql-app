@@ -40,7 +40,7 @@ graph TD
     E -->|Executes| F[GetHello2Data Query]
     B -->|Intercepts| F
     F -->|Returns| G[name data]
-    G -->|Renders| H[Hello2, {name}!]
+    G -->|Renders| H["Hello2, {name}!"]
 
     style A fill:#f9f,stroke:#333
     style B fill:#bbf,stroke:#333
