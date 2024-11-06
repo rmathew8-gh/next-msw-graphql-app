@@ -169,3 +169,8 @@ classDiagram
     Hello3Provider --> GET_HELLO_DATA : queries
     useHello3Context --> Hello3Context : consumes
 ```
+
+### Pattern 4: Simplified Context Provider
+
+- see Hello4.tsx, Hello4.stories.tsx
+- removed the "in-correct-context" check.
