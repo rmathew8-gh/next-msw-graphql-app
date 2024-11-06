@@ -48,6 +48,51 @@ graph TD
     style D fill:#fbf,stroke:#333
 ```
 
+```mermaid
+classDiagram
+    class Hello2Props {
+        <<interface>>
+        +name?: string
+    }
+
+    class Hello2Component {
+        <<React.FC>>
+        +render()
+        -defaultName: string
+    }
+
+    class useHello2Data {
+        <<hook>>
+        +loading: boolean
+        +error: ApolloError
+        +name: string
+        -GET_HELLO_DATA: gql
+    }
+
+    class GraphQLSchema {
+        <<type>>
+        +yourData: YourData
+    }
+
+    class YourData {
+        <<type>>
+        +name: string
+    }
+
+    class ApolloClient {
+        <<service>>
+        +useQuery()
+        +cache: InMemoryCache
+        +uri: string
+    }
+
+    Hello2Component ..|> Hello2Props : implements
+    Hello2Component --> useHello2Data : uses
+    useHello2Data --> ApolloClient : queries
+    ApolloClient --> GraphQLSchema : fetches
+    GraphQLSchema --> YourData : contains
+```
+
 ### Pattern 3: Context Provider
 
 -   see Hello3.tsx, Hello3.stories.tsx
@@ -82,4 +127,45 @@ graph TD
     style H3CTX fill:#f9f,stroke:#333
     style GQL fill:#bbf,stroke:#333
     style MSW fill:#bfb,stroke:#333
+```
+
+```mermaid
+classDiagram
+    class Hello3Context {
+        +loading: boolean
+        +error?: Error
+        +name?: string
+    }
+
+    class Hello3Provider {
+        +children: ReactNode
+        +useQuery(GET_HELLO_DATA)
+        +render()
+    }
+
+    class Hello3 {
+        +name?: string
+        -defaultName: string
+        +render()
+    }
+
+    class Hello3Props {
+        <<interface>>
+        +name?: string
+    }
+
+    class useHello3Context {
+        +useContext(Hello3Context)
+    }
+
+    class GET_HELLO_DATA {
+        +query: string
+        +returns: Object
+    }
+
+    Hello3Provider --> Hello3Context : creates
+    Hello3 ..|> Hello3Props : implements
+    Hello3 --> useHello3Context : uses
+    Hello3Provider --> GET_HELLO_DATA : queries
+    useHello3Context --> Hello3Context : consumes
 ```
