@@ -26,8 +26,36 @@ npx msw init ./public
 - Separate data fetching concerns
 - Add additional data transformation logic
 
-*** Pattern 2: Context Provider
+*** Pattern 3: Context Provider
 - see Hello3.tsx, Hello3.stories.tsx
 - The data needs to be shared across many components
 - You want to avoid prop drilling
 - You need to manage global state
+
+```mermaid
+graph TD
+    subgraph "Hello3.stories.tsx"
+        ST[Storybook Config] --> AP[ApolloProvider]
+        AP --> H3P[Hello3Provider]
+        H3P --> H3C[Hello3 Component]
+        MSW[MSW Handlers] -.->|Mock GraphQL Response| AP
+    end
+
+    subgraph "Hello3.tsx"
+        H3CTX[Hello3Context] --> H3PROV[Hello3Provider Component]
+        GQL[GraphQL Query] --> H3PROV
+        H3PROV --> HOOK[useHello3Context Hook]
+        HOOK --> H3[Hello3 Component]
+        
+        H3 -->|Renders| OUTPUT[h1 Element]
+        
+        subgraph "Data Flow"
+            H3PROV -->|Provides Context| CTX_VALUES[Context Values]
+            CTX_VALUES -->|loading\nerror\nname| H3
+        end
+    end
+
+    style H3CTX fill:#f9f,stroke:#333
+    style GQL fill:#bbf,stroke:#333
+    style MSW fill:#bfb,stroke:#333
+```
