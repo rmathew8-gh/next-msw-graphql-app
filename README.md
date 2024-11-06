@@ -31,6 +31,23 @@ npx msw init ./public
 -   Separate data fetching concerns
 -   Add additional data transformation logic
 
+```mermaid
+graph TD
+    A[Hello2.stories.tsx] -->|Provides Mock Data| B[MSW Handler]
+    A -->|Wraps with| C[ApolloProvider]
+    C -->|Provides client to| D[Hello2 Component]
+    D -->|Uses| E[useHello2Data Hook]
+    E -->|Executes| F[GetHello2Data Query]
+    B -->|Intercepts| F
+    F -->|Returns| G[name data]
+    G -->|Renders| H[Hello2, {name}!]
+
+    style A fill:#f9f,stroke:#333
+    style B fill:#bbf,stroke:#333
+    style C fill:#bfb,stroke:#333
+    style D fill:#fbf,stroke:#333
+```
+
 ### Pattern 3: Context Provider
 
 -   see Hello3.tsx, Hello3.stories.tsx
