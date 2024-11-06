@@ -1,0 +1,10 @@
+* Description
+A basic app that shows how to use msw with graphql in a React app.
+
+** Steps
+#+begin_src sh
+npx create-next-app next-msw-graphql-app
+cd next-msw-graphql-app
+pnpm i -D msw msw-storybook-addon @storybook/react
+npx storybook@latest init
+#+end_src
